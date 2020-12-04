@@ -1,6 +1,7 @@
-# -*- coding: utf-8 -*-
 from config import INTENTS, SCENARIOS
+from weather.engine import WeatherMaker, DatabaseUpdater
 import handlers
+from datetime import datetime, timedelta
 
 
 class UserState:
@@ -25,7 +26,21 @@ def available_intents() -> str:
     return result
 
 
+def loading_data_by_last_week():
+    print("Пожалуйста подождите. Пополняем базу данных данными за последние 7 дней")
+    date_now = datetime.now()
+    date_from = date_now - timedelta(days=7)
+    database_updater = DatabaseUpdater("sqlite:///forecasts.db")
+    weather_maker = WeatherMaker()
+    weather_maker.pull_weather_data(date_from, date_now)
+    forecasts = weather_maker.get_weather_data()
+    forecasts_already_in_db = database_updater.get_forecasts(date_from, date_now)
+    database_updater.save_forecasts(forecasts)
+    print(f"Было обнаружено и записано {len(forecasts) - len(forecasts_already_in_db)} новых прогнозов")
+
+
 if __name__ == '__main__':
+    loading_data_by_last_week()
     user_state = UserState()
     is_stopped = False
     while not is_stopped:

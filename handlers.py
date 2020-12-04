@@ -81,7 +81,6 @@ def select_forecast_to_card_create(text, context):
             print("Открытка была сохранена. Результат будет выведен на экран через несколько секунд...")
             image_maker.view_card()
             return True
-        else:
-            return False
     else:
         print("Для продолжения необходимо получить из базы хотябы один прогноз")
+        return True

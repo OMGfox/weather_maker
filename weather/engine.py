@@ -214,8 +214,8 @@ class DatabaseUpdater:
     def get_forecasts(self, date_from: datetime, date_to: datetime):
         """
         get forecast data from database
-        @param date_from: date str "2000-12-01"
-        @param date_to: date str "2000-12-01"
+        @param date_from: start of data range
+        @param date_to: end of data range
         @return: forecast obj
         """
         forecasts = []
