@@ -3,6 +3,7 @@ import re
 from datetime import datetime
 from weather.engine import WeatherMaker, DatabaseUpdater, ImageMaker
 from config import PATH_TO_SAVE_CARDS
+from multiprocessing import Process
 
 
 def check_date_from(text, context):
@@ -78,8 +79,7 @@ def select_forecast_to_card_create(text, context):
             new_card_name = selected_forecast["date"].strftime("%d-%m-%Y") + ".jpg"
             path_to_card = os.path.join(PATH_TO_SAVE_CARDS, new_card_name)
             image_maker.save_card(path_to_card)
-            print("Открытка была сохранена. Результат будет выведен на экран через несколько секунд...")
-            image_maker.view_card()
+            print(f"Открытка была сохранена. Вы сможете найти ее по этому пути: \"{path_to_card}\"")
             return True
     else:
         print("Для продолжения необходимо получить из базы хотябы один прогноз")

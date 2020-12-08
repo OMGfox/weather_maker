@@ -85,4 +85,4 @@ SCENARIOS = {
 }
 
 
-PATH_TO_SAVE_CARDS = ""
+PATH_TO_SAVE_CARDS = "saved_cards"
